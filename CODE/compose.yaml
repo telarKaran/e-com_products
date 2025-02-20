@@ -3,11 +3,11 @@ services:
     build:
       context: .
     ports:
-      - "8000:8000"
+      - "8001:8001"
     env_file:
       - .env
-    # depends_on:
-    #   - mongo
+    depends_on:
+      - mongo
     develop:
       watch:
         - action: sync
@@ -18,14 +18,14 @@ services:
         - action: rebuild
           path: package.json
 
-#   mongo:
-#     image: mongo:7
-#     restart: always
-#     volumes:
-#       - mongo_data:/data/db
-#     ports:
-#       - "27017:27017"
+  mongo:
+    image: mongo:7
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
 
-# volumes:
-#   mongo_data:
-#     driver: local
+volumes:
+  mongo_data:
+    driver: local
