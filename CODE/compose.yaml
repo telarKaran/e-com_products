@@ -7,7 +7,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - mongo
+      - product-mongo
     develop:
       watch:
         - action: sync
@@ -18,14 +18,52 @@ services:
         - action: rebuild
           path: package.json
 
-  mongo:
+  product-mongo:
     image: mongo:7
     restart: always
     volumes:
-      - mongo_data:/data/db
+      - product_mongo_data:/data/db
     ports:
-      - "27017:27017"
+      - "27019:27017"
 
 volumes:
-  mongo_data:
+  product_mongo_data:
     driver: local
+
+
+# services:
+#   product-service:
+#     build:
+#       context: .
+#     ports:
+#       - "8001:8001"
+#     env_file:
+#       - .env
+#     depends_on:
+#       - mongo
+    
+#     # Mount the local "uploads" folder to "/app/uploads" in the container
+#     volumes:
+#       - ./uploads:/app/uploads
+
+#     develop:
+#       watch:
+#         - action: sync
+#           path: ./src
+#           target: /app/src
+#           ignore:
+#             - node_modules/
+#         - action: rebuild
+#           path: package.json
+
+#   mongo:
+#     image: mongo:7
+#     restart: always
+#     volumes:
+#       - mongo_data:/data/db
+#     ports:
+#       - "27017:27017"
+
+# volumes:
+#   mongo_data:
+#     driver: local
